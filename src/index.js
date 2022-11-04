@@ -72,7 +72,7 @@ function tick(){
 // Takes in the tick function as a callback, and sets up the browser feature timer to asynchronously call the tick function every
 // second. Because it is asynchronous, it's really added to the callback queue every second, and then only invoked after the event
 // loop indicates the global execution context has popped off the call stack. 
-setInterval(tick, 1000)
+// setInterval(tick, 1000)
 
 // Takes in an element utilizing it to keep the DOM updated. Can only render one element, and only one call works at a time. 
 // So you should have a primary App component that is the parent of all other elements within the application. 
