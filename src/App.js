@@ -6,6 +6,7 @@ import ElementComponent from './components/Element'
 import Welcome from './components/Welcome'
 import Counter from './components/Counter'
 import Count from './components/Counter'
+import NameForm from './components/NameForm'
 
 // Components allow you to split the UI up into independent, reusable pieces in which you can think about in isolation based on their
 // functionality/purpose within the application. They can be seen as functions that take in arbitrary inputs called props, and return
@@ -19,6 +20,8 @@ const App = (props) => {
         avatarUrl: '',
         name: 'John'
     }
+
+    const numbers = [1, 2, 3, 4]
 
     const [counterSwitch, setCounterSwitch] = React.useState(true)
   return (
@@ -55,13 +58,23 @@ const App = (props) => {
         state. You can chain these into multiple if else statements, but remember if conditions become too complex you should just extract
         a component.*/}
         {counterSwitch ? <Counter increment={1}/> :  <Counter increment={2}/>}
-         <Counter increment={3}/>
+         <Counter increment={5}/>
         {/* This is an && conditionl render, used to conditional render one element based on if a condition evaluates to true.
         This works because true && expression always evaluates to expression, and false && expression evaluates to false.
         Be careful with this because using a falsey expression on the left said the falsey expression will be rendered into the JSX*/}
         {counterSwitch &&  <Counter increment={2}/>}
         
-        x
+        {/* You can render a list of elements based on an array using the map method, this allows you to create a component for
+        each key of the array, and pass the value of that key into the component as props.*/}
+        {/* when rendering components in this way each item in the list requires a unique key, this allows React to identify which
+        items have changed, been added, or been removed. The best thing to use as a key is a string that uniquely identifies an item
+        from its sibling, most often youd use an id from the array data. If not stable id is present you can use the index from map.
+        This isnt recommended if the order of items may change though, it can effect performance and components state. If a key isnt 
+        provided React defaults to using indexes*/}
+        {/* Keys serve as hints to React, but arent passed to your components props, if you need the same value pass a different prop*/}
+        {numbers.map(number => <Counter increment={number} key={number.toString()}/>)}
+
+        <NameForm/>
     </div>
   )
 }

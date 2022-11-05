@@ -69,7 +69,7 @@ export default class Counter extends React.Component {
     render() {
         /* In some instances you may want a component to hide itself based on props/state, return null to do this. This does not stop 
         the components lifecycle methods from running though*/
-        if(this.props.increment > 2){
+        if(this.props.increment > 4){
             return null
         }
 
