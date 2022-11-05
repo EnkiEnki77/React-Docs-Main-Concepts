@@ -1,5 +1,5 @@
 // A package that provides DOM specific methods that can be used at the top level of your app. 
-import {createRoot} from "react-dom";
+import {createRoot} from "react-dom/client";
 import {createElement} from "react";
 import App from './App'
 // Creates a React root for the supplied div container, and then returns the root to be assigned to variable. The root is used 

@@ -1,4 +1,4 @@
-import './App.css'
+
 import Avatar from './Avatar';
 import CommentDate from './CommentDate';
 import CommentText from './CommentText';
@@ -33,6 +33,8 @@ function Comment(props) {
 
   //Makes components much more readable, just make sure youre giving your components names that are descriptive of what they are.
   function ExtractedComment(props) {
+    // props are read only. No matter what a components must never modify its own props. Because Components are meant to be pure 
+    // functions. A pure function is a function that if given the same inputs will always return the same value. 
     return (
       <div className="Comment">
         <UserInfo author={props.author}/>

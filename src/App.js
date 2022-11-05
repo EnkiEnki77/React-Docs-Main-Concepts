@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import './App.css'
-import Comment from './Comment'
-import ElementComponent from './Element'
-import Welcome from './Welcome'
+import Comment from './components/Comment'
+import { Clock, ClockClass } from './components/Clock'
+import ElementComponent from './components/Element'
+import Welcome from './components/Welcome'
+import Counter from './components/Counter'
+import Count from './components/Counter'
 
 // Components allow you to split the UI up into independent, reusable pieces in which you can think about in isolation based on their
 // functionality/purpose within the application. They can be seen as functions that take in arbitrary inputs called props, and return
@@ -39,6 +42,11 @@ const App = (props) => {
         <Welcome name='Enki'/>
 
         <Comment author={author} text='hi bitches' date={new Date().toLocaleDateString()}/>
+
+        <Clock date={new Date()}/>
+        <ClockClass/>
+
+        <Counter increment={1}/>
     </div>
   )
 }
