@@ -11,18 +11,26 @@ export default class Counter extends React.Component {
         // this.increment = this.increment.bind(this)
     }
 
-    // Multiple setState calls would generally each trigger a rerender from React, but if youre making multiple seState calls in one
-    // component at once this can be very ineffecient and cause a component and its children to rerender more than needed. So now
-    // all set state calls in a component are batched into one update in order to prevent unnecessary rerenders. This makes setState
-    // asynchronous, because of this you cannot rely on current state to calculate next state, such as in a counter. THis is because
-    // when setState is added to the callback queue it is passed the current state at the time of it being invoked. So even if you 
-    // made 100 calls to increment a count state none of them have actually changed the state by the time the last one is invoked, 
-    // so the count will still only ever increment by 1
+   
    
     // Your event handlers should be a method on the class, class methods are not bound to the this of the class by default though.
     // You should bind them manually in the constructor. Otherwise this will be undefined when you go to pass them to an event listener. 
-    // 
-    increment() {
+    // There are two ways to get around binding, wrap the event handler instance in a callback AF that invokes it, or make the event 
+    // handler an arrow function, arrow functions have a lexical this, meaning they take on the this of the top level of the class. 
+    // Using arrow functions for methods is also known as public class fields syntax. Dont use the second way if passing to a child
+    // through props, it may cause a second rerender. 
+    // Its common in instances such as a loop to want to pass additional arguments to an event handler, this is one instance where
+    // using the second way is needed ex: onClick((e) => this.increment(id, e)), if doing this in a class you can also just bind 
+    // this and the argument to the handler tho. onClick(this.increment.bind(this, id)), in both instances e is the second argument. 
+    // in the arrow function example you must explicitly define e. 
+    increment = () => {
+        // Multiple setState calls would generally each trigger a rerender from React, but if youre making multiple seState calls in one
+        // component at once this can be very ineffecient and cause a component and its children to rerender more than needed. So now
+        // all set state calls in a component are batched into one update in order to prevent unnecessary rerenders. This makes setState
+        // asynchronous, because of this you cannot rely on current state to calculate next state, such as in a counter. THis is because
+        // when setState is added to the callback queue it is passed the current state at the time of it being invoked. So even if you 
+        // made 100 calls to increment a count state none of them have actually changed the state by the time the last one is invoked, 
+        // so the count will still only ever increment by 1
         // both calls rely on current state at time of the call for incrementing, because setState is async you can make this call
         // infinite times, but none of the calls will know about the incrementation done by any of the others, so the state will only 
         // increment once per event
@@ -59,6 +67,12 @@ export default class Counter extends React.Component {
     // React has a unidirectional data flow, meaning that state is always owned by the component it is defined, and any data derived
     // from state can only be passed downwards through props. 
     render() {
+        /* In some instances you may want a component to hide itself based on props/state, return null to do this. This does not stop 
+        the components lifecycle methods from running though*/
+        if(this.props.increment > 2){
+            return null
+        }
+
         return (
             <div>
                 <button>-</button>

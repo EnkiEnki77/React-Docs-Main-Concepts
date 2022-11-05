@@ -19,6 +19,8 @@ const App = (props) => {
         avatarUrl: '',
         name: 'John'
     }
+
+    const [counterSwitch, setCounterSwitch] = React.useState(true)
   return (
     <div className="App">
         {/* Because Components are functions that return elements they can be imported to other files, and utilized as JSx the same way
@@ -48,8 +50,18 @@ const App = (props) => {
 
         {/* Components are truly isolated, so even though im putting two Counters here which are both referencing the same component
         They are different instances of that componnet, and so have their own state and lifecycle */}
-        <Counter increment={1}/>
-        <Counter increment={1}/>
+        {/* I can conditionally render components based on the current state of the component rendering them. */}
+        {/* This is an if else conditional render utilizing ternary operator, allows you to decide bewtween two elements depending on 
+        state. You can chain these into multiple if else statements, but remember if conditions become too complex you should just extract
+        a component.*/}
+        {counterSwitch ? <Counter increment={1}/> :  <Counter increment={2}/>}
+         <Counter increment={3}/>
+        {/* This is an && conditionl render, used to conditional render one element based on if a condition evaluates to true.
+        This works because true && expression always evaluates to expression, and false && expression evaluates to false.
+        Be careful with this because using a falsey expression on the left said the falsey expression will be rendered into the JSX*/}
+        {counterSwitch &&  <Counter increment={2}/>}
+        
+        x
     </div>
   )
 }
