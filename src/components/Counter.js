@@ -8,7 +8,7 @@ export default class Counter extends React.Component {
             favorite: true
         }
 
-        this.increment = this.increment.bind(this)
+        // this.increment = this.increment.bind(this)
     }
 
     // Multiple setState calls would generally each trigger a rerender from React, but if youre making multiple seState calls in one
@@ -19,6 +19,9 @@ export default class Counter extends React.Component {
     // made 100 calls to increment a count state none of them have actually changed the state by the time the last one is invoked, 
     // so the count will still only ever increment by 1
    
+    // Your event handlers should be a method on the class, class methods are not bound to the this of the class by default though.
+    // You should bind them manually in the constructor. Otherwise this will be undefined when you go to pass them to an event listener. 
+    // 
     increment() {
         // both calls rely on current state at time of the call for incrementing, because setState is async you can make this call
         // infinite times, but none of the calls will know about the incrementation done by any of the others, so the state will only 
@@ -45,16 +48,25 @@ export default class Counter extends React.Component {
         // will be changed. 
         // if your state is this.state = {count: 0, favorite: true} like in this componnet for example. You could make this setState call
         this.setState({favorite: false})
-        // This is what it would actually be converted to before setting the state. 
+        // This is what it would actually be converted to under the hood before setting the state. A shallow merge
         this.setState(prevState => ({...prevState, favorite: false}))
         // And the state would then be this this.state = {count: 0, favorite: false}
     }
 
+    // Neither child nor parent should need to know whether a component is stateful or not, state is encapsulated entirely within 
+    // the component it is defined, and can only be changed from that component. State data may be passed to children as props. 
+    // This does not give the child any indication that its props are state or where they came from though. 
+    // React has a unidirectional data flow, meaning that state is always owned by the component it is defined, and any data derived
+    // from state can only be passed downwards through props. 
     render() {
         return (
             <div>
                 <button>-</button>
                 <h1>{this.state.count}</h1>
+                {/* Handling events in React is very similar to how its done with DOM elements, except the naming convention is 
+                camelCase, and with JSX you pass a function as the eventHandler instead of a string. You also cant return false to 
+                prevent default behaviour. You have to call the event.preventDefault method explicitly. The event object is a synthetic 
+                event passed into the event handler from the JSX node the event is occuring. */}
                 <button onClick={this.increment}>+</button>
             </div>
         )

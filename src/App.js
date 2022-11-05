@@ -46,6 +46,9 @@ const App = (props) => {
         <Clock date={new Date()}/>
         <ClockClass/>
 
+        {/* Components are truly isolated, so even though im putting two Counters here which are both referencing the same component
+        They are different instances of that componnet, and so have their own state and lifecycle */}
+        <Counter increment={1}/>
         <Counter increment={1}/>
     </div>
   )
